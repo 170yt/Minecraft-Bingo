@@ -1,0 +1,56 @@
+package x170.bingo.goal;
+
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.text.Text;
+import x170.bingo.game.GameManager;
+
+public class ItemGoal implements Goal {
+    public static final String DISPLAY_NAME = "Items";
+    public static final String DISPLAY_DESCRIPTION = "Collect the given item to complete the goal";
+    public static final Item DISPLAY_ITEM = Items.STICK;
+    private final String name;
+    private final ItemStack displayItem;
+    private final Item item;
+    private final String itemIcon;
+
+    public ItemGoal(Item item) {
+        this.name = item.getName().getString();
+        this.displayItem = Goal.generateDisplayItem(
+                item,
+                null,
+                Text.literal("Collect " + this.name)
+        );
+        this.item = item;
+        this.itemIcon = GameManager.getItemIcon(item);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ItemStack getDisplayItem() {
+        return displayItem;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public String toString() {
+        return itemIcon + getName();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof ItemGoal itemGoal)) return false;
+        return itemGoal.getItem().equals(item);
+    }
+
+    @Override
+    public int hashCode() {
+        return item.hashCode();
+    }
+}

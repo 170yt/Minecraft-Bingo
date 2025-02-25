@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "x170.bingo.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ChangeGameModeMixin",
+    "HungerManagerMixin",
+    "InventoryChangedCriterionMixin",
+    "PlayerAdvancementTrackerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}
