@@ -12,7 +12,7 @@ The mod is designed to be played on a multiplayer server, but can also be played
 ## Getting Started
 1. [Install Fabric](https://fabricmc.net/use/installer/)
 2. Download [Fabric API](https://modrinth.com/mod/fabric-api) and put it in the mods folder
-3. Download Minecraft Bingo from [Modrinth](TODO: link) and put it in the mods folder
+3. Download Minecraft Bingo from [Modrinth](https://modrinth.com/mod/minecraft-bingo/versions) and put it in the mods folder
 4. (Optional - but highly recommended) Use the [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack)
 
 ## Commands
@@ -70,17 +70,8 @@ All available settings from top left to bottom right:
 
 ## Icons
 ![Scoreboard with Icons](images/Bingo-Scoreboard.png)<br>
-The scoreboard can display icons for each goal. For this to work, the player (client) needs to have the resource pack installed.
-The server can be configured to prompt the player to download the resource pack when they join the server.
-I uploaded the resource pack to [mc-packs.net](https://download.mc-packs.net/pack/981e01d05e7bb0527592803efddfc3485bbd8a19.zip).
-To use it, add the following lines to the server.properties file:
-```
-resource-pack=https://download.mc-packs.net/pack/4d20d1635481eb40bf4ce0d7726468457374c917.zip
-resource-pack-sha1=4d20d1635481eb40bf4ce0d7726468457374c917
-```
-The resource pack can also be downloaded from [Modrinth](.
-A file with all mappings between item names and icons can be found [here](https://github.com/170yt/Minecraft-Bingo-Resource-Pack) and must be placed in `config/bingo/item_icon_mappings.json`.
-All icons will be disabled if the mappings file is not provided.
+The scoreboard can display icons for each goal. For this to work, the player (client) needs to have the [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack) installed.<br>
+For instructions on how to install the resource pack, see [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack).
 
 ## Images
 ![Bingo Goals Inventory](images/Bingo-Goals.png)<br>
