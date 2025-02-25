@@ -13,7 +13,7 @@ The mod is designed to be played on a multiplayer server, but can also be played
 1. [Install Fabric](https://fabricmc.net/use/installer/)
 2. Download [Fabric API](https://modrinth.com/mod/fabric-api) and put it in the mods folder
 3. Download Minecraft Bingo from [Modrinth](TODO: link) and put it in the mods folder
-4. (Optional - but highly recommended) Use the [Minecraft Bingo Resource Pack](TODO: link to repo): [Instructions](TODO: link to repo)
+4. (Optional - but highly recommended) Use the [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack)
 
 ## Commands
 - `/bingo` or `/b` - Opens the bingo GUI, that shows all items to collect
@@ -79,7 +79,7 @@ resource-pack=https://download.mc-packs.net/pack/4d20d1635481eb40bf4ce0d77264684
 resource-pack-sha1=4d20d1635481eb40bf4ce0d7726468457374c917
 ```
 The resource pack can also be downloaded from [Modrinth](.
-A file with all mappings between item names and icons can be found [here]( and must be placed in `config/bingo/item_icon_mappings.json`.
+A file with all mappings between item names and icons can be found [here](https://github.com/170yt/Minecraft-Bingo-Resource-Pack) and must be placed in `config/bingo/item_icon_mappings.json`.
 All icons will be disabled if the mappings file is not provided.
 
 ## Images
@@ -143,10 +143,10 @@ Includes: dyed Shulker Boxes, aged Copper Variants, Trial Chambers, Beacons
 - **I see weird textures in the bingo goals inventory and the scoreboard. What can I do?**<br>
   ![Bingo Goals Inventory without Resource Pack](images/Bingo-Goals-Missing-Textures.png)<br>
   ![Scoreboard without Resource Pack](images/Bingo-Scoreboard-Missing-Textures.png)<br>
-  You need to install the [Minecraft Bingo Resource Pack](TODO: link to repo).<br>
+  You need to install the [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack).<br>
   If you do not want to use the resource pack, you can disable the use of it with the command `/bingo useBingoResourcePack false` (you need to restart the server for this to take effect).
 - **I cannot see the icons in the scoreboard. What can I do?**<br>
-  Make sure that the item-icon mappings file is present (for instructions see [Minecraft Bingo Resource Pack](TODO: link to repo)).<br>
+  Make sure that the item-icon mappings file is present (for instructions see [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack)).<br>
   Also, make sure that the setting `useBingoResourcePack` is set to `true`. You can see the current state with the command `/bingo useBingoResourcePack`.
 - **Do I need to install the mod on the client side?**<br>
   No, the mod is server-side only and does not require the client to have it installed if it's already installed on the server.<br>
