@@ -6,7 +6,6 @@ import eu.pb4.sgui.api.gui.SimpleGui;
 import net.minecraft.scoreboard.Scoreboard;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -48,7 +47,7 @@ public class TeamSelectionGUI extends SimpleGui {
                         else
                             scoreboard.addScoreHolderToTeam(player.getNameForScoreboard(), team.getTeam());
 
-                        player.playSoundToPlayer(SoundEvents.UI_BUTTON_CLICK.value(), SoundCategory.MASTER, 0.5F, 1.0F);
+                        GameManager.playSoundToPlayer(player, SoundEvents.UI_BUTTON_CLICK.value(), 0.5F);
                     });
 
             for (ServerPlayerEntity p : players) {

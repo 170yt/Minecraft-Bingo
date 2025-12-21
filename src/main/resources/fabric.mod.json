@@ -1,31 +1,31 @@
 {
-	"schemaVersion": 1,
-	"id": "bingo",
-	"version": "${version}",
-	"name": "Bingo",
-	"description": "A fun Game of Bingo for Minecraft",
-	"authors": [
-		"170"
-	],
-	"contact": {
-		"homepage": "",
-		"sources": ""
-	},
-	"license": "MIT",
-	"icon": "assets/bingo/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"x170.bingo.Bingo"
-		]
-	},
-	"mixins": [
-		"bingo.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=0.16.9",
-		"minecraft": "~1.21.3",
-		"java": ">=21",
-		"fabric-api": "*"
-	}
+  "schemaVersion": 1,
+  "id": "bingo",
+  "version": "${version}",
+  "name": "Bingo",
+  "description": "A fun Game of Bingo for Minecraft",
+  "authors": [
+    "170"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/project/3cPmSw9U",
+    "sources": "https://github.com/170yt/Minecraft-Bingo"
+  },
+  "license": "MIT",
+  "icon": "assets/bingo/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "x170.bingo.Bingo"
+    ]
+  },
+  "mixins": [
+    "bingo.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.3",
+    "minecraft": "~1.21.11",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
 }

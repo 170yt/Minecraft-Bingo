@@ -3,12 +3,12 @@ package x170.bingo.team;
 import net.minecraft.item.Item;
 import net.minecraft.scoreboard.*;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import x170.bingo.Bingo;
 import x170.bingo.game.BingoInventory;
+import x170.bingo.game.GameManager;
 import x170.bingo.goal.Goal;
 
 import java.util.ArrayList;
@@ -149,7 +149,7 @@ public class BingoTeam {
     public void sendMessage(Text message, boolean successSound) {
         for (ServerPlayerEntity player : this.getPlayersInTeam()) {
             player.sendMessage(message);
-            if (successSound) player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1.0F, 1.0F);
+            if (successSound) GameManager.playSoundToPlayer(player, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
         }
     }
 }

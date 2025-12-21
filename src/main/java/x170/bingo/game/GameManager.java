@@ -12,12 +12,13 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
-import net.minecraft.world.GameRules;
+import net.minecraft.world.rule.GameRules;
 import net.minecraft.world.TeleportTarget;
 import x170.bingo.Bingo;
 import x170.bingo.goal.Goal;
@@ -69,10 +70,10 @@ public class GameManager {
         TeamManager.initRoundForTeams(new TeamGoalManager(goals), false);
 
         ServerWorld overworld = Bingo.SERVER.getOverworld();
-        TeleportTarget worldSpawn = new TeleportTarget(overworld, overworld.getSpawnPos().toBottomCenterPos().add(0, 1, 0), new Vec3d(0, 0, 0), 0, 0, TeleportTarget.NO_OP);
+        TeleportTarget worldSpawn = new TeleportTarget(overworld, overworld.getSpawnPoint().getPos().toBottomCenterPos().add(0, 1, 0), new Vec3d(0, 0, 0), 0, 0, TeleportTarget.NO_OP);
 
         // Prepare the world for the game
-        Bingo.SERVER.getGameRules().get(GameRules.ANNOUNCE_ADVANCEMENTS).set(false, Bingo.SERVER);
+        Bingo.SERVER.getSpawnWorld().getGameRules().setValue(GameRules.ANNOUNCE_ADVANCEMENTS, false, Bingo.SERVER);
         overworld.setTimeOfDay(0);
         overworld.setWeather(ServerWorld.CLEAR_WEATHER_DURATION_PROVIDER.get(overworld.getRandom()), 0, false, false);
 
@@ -107,7 +108,7 @@ public class GameManager {
             SettingsManager.applySettingsToPlayer(player);
 
             // Play start sound
-            player.playSoundToPlayer(SoundEvents.BLOCK_END_PORTAL_SPAWN, SoundCategory.MASTER, 1.0F, 1.0F);
+            GameManager.playSoundToPlayer(player, SoundEvents.BLOCK_END_PORTAL_SPAWN);
 
             if (bingoTeam == null) continue;
 
@@ -139,7 +140,7 @@ public class GameManager {
             SettingsManager.applySettingsToPlayer(player);
 
             // Play sound to all players
-            player.playSoundToPlayer(SoundEvents.ENTITY_ENDER_DRAGON_DEATH, SoundCategory.MASTER, 0.5F, 1.0F);
+            GameManager.playSoundToPlayer(player, SoundEvents.ENTITY_ENDER_DRAGON_DEATH, 0.5F);
         }
 
         List<String> leaderboard = TeamManager.getLeaderboard();
@@ -198,8 +199,8 @@ public class GameManager {
     private static Text getCommandMessage(String command, String description, boolean runCommandOnClick) {
         return Text.literal("§7Use ")
                 .append(Text.literal("§e" + command + "§7").setStyle(Style.EMPTY
-                        .withClickEvent(new ClickEvent(runCommandOnClick ? ClickEvent.Action.RUN_COMMAND : ClickEvent.Action.SUGGEST_COMMAND, command))
-                        .withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal("Click to " + description)))
+                        .withClickEvent(runCommandOnClick ? new ClickEvent.RunCommand(command) : new ClickEvent.SuggestCommand(command))
+                        .withHoverEvent(new HoverEvent.ShowText(Text.literal("Click to " + description)))
                 ))
                 .append(Text.literal(" to " + description + "."));
     }
@@ -218,6 +219,14 @@ public class GameManager {
         hungerManager.setFoodLevel(20);
         hungerManager.setSaturationLevel(5.0F);
         player.clearStatusEffects();
+    }
+
+    public static void playSoundToPlayer(ServerPlayerEntity player, SoundEvent soundEvent) {
+        player.getEntityWorld().playSound(null, player.getBlockPos(), soundEvent, SoundCategory.MASTER);
+    }
+
+    public static void playSoundToPlayer(ServerPlayerEntity player, SoundEvent soundEvent, float volume) {
+        player.getEntityWorld().playSound(null, player.getBlockPos(), soundEvent, SoundCategory.MASTER, volume, 1.0F);
     }
 
     public static void loadItemIcons() {

@@ -2,13 +2,13 @@ package x170.bingo.goal;
 
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Unit;
 import org.jetbrains.annotations.Nullable;
 import x170.bingo.setting.Settings;
 
@@ -38,15 +38,14 @@ public interface Goal {
 //        displayItem.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(floats, flags, strings, colors));
 
         // Hide default tooltip
-        displayItem.apply(DataComponentTypes.TRIM, null, comp -> comp != null ? comp.withShowInTooltip(false) : null);
-        displayItem.apply(DataComponentTypes.UNBREAKABLE, null, comp -> comp != null ? comp.withShowInTooltip(false) : null);
-        displayItem.apply(DataComponentTypes.ENCHANTMENTS, null, comp -> comp != null ? comp.withShowInTooltip(false) : null);
-        displayItem.apply(DataComponentTypes.STORED_ENCHANTMENTS, null, comp -> comp != null ? comp.withShowInTooltip(false) : null);
-        displayItem.apply(DataComponentTypes.ATTRIBUTE_MODIFIERS, null, comp -> comp != null ? comp.withShowInTooltip(false) : null);
-        displayItem.apply(DataComponentTypes.DYED_COLOR, null, comp -> comp != null ? comp.withShowInTooltip(false) : null);
-        displayItem.apply(DataComponentTypes.CAN_BREAK, null, comp -> comp != null ? comp.withShowInTooltip(false) : null);
-        displayItem.apply(DataComponentTypes.CAN_PLACE_ON, null, comp -> comp != null ? comp.withShowInTooltip(false) : null);
-        displayItem.set(DataComponentTypes.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+        var comp = TooltipDisplayComponent.DEFAULT;
+        for (var entry : displayItem.getComponents()) {
+            if (entry.type() != DataComponentTypes.ITEM_NAME && entry.type() != DataComponentTypes.CUSTOM_NAME && entry.type() != DataComponentTypes.LORE) {
+                comp = comp.with(entry.type(), true);
+            }
+        }
+        displayItem.set(DataComponentTypes.TOOLTIP_DISPLAY, comp);
+
         return displayItem;
     }
 }

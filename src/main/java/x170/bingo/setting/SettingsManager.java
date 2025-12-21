@@ -9,7 +9,7 @@ import net.minecraft.entity.player.HungerManager;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.GameRules;
+import net.minecraft.world.rule.GameRules;
 import x170.bingo.Bingo;
 import x170.bingo.game.GameManager;
 import x170.bingo.game.GameStatus;
@@ -57,11 +57,11 @@ public class SettingsManager {
     }
 
     public static void onKeepInventoryChange() {
-        Bingo.SERVER.getGameRules().get(GameRules.KEEP_INVENTORY).set(Settings.KEEP_INVENTORY.getBool(), Bingo.SERVER);
+        Bingo.SERVER.getSpawnWorld().getGameRules().setValue(GameRules.KEEP_INVENTORY, Settings.KEEP_INVENTORY.getBool(), Bingo.SERVER);
     }
 
     public static void onPvPChange() {
-        Bingo.SERVER.setPvpEnabled(Settings.PVP.getBool());
+        Bingo.SERVER.getSpawnWorld().getGameRules().setValue(GameRules.PVP, Settings.PVP.getBool(), Bingo.SERVER);
     }
 
     private static void attributeModifier(ServerPlayerEntity player, RegistryEntry<EntityAttribute> attribute, double multiplier, boolean isMultiplier) {

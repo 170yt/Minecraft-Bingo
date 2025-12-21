@@ -7,7 +7,6 @@ import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import x170.bingo.Bingo;
@@ -25,7 +24,7 @@ public class BingoCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess commandRegistryAccess, CommandManager.RegistrationEnvironment registrationEnvironment) {
         LiteralCommandNode<ServerCommandSource> literalCommandNode = dispatcher.register(
             CommandManager.literal("bingo")
-                    // .requires(source -> source.hasPermissionLevel(2))
+                    // .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
                     .executes(context -> executeBingo(context.getSource()))
                     .then(
                             CommandManager.literal("teams")
@@ -33,32 +32,32 @@ public class BingoCommand {
                     )
                     .then(
                         CommandManager.literal("settings")
-                                .requires(source -> source.hasPermissionLevel(2))
+                                .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
                                 .executes(context -> executeSettings(context.getSource()))
                     )
                     .then(
                         CommandManager.literal("start")
-                                .requires(source -> source.hasPermissionLevel(2))
+                                .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
                                 .executes(context -> executeStart(context.getSource()))
                     )
                     .then(
                         CommandManager.literal("stop")
-                                .requires(source -> source.hasPermissionLevel(2))
+                                .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
                                 .executes(context -> executeStop(context.getSource()))
                     )
                     .then(
                         CommandManager.literal("pause")
-                                .requires(source -> source.hasPermissionLevel(2))
+                                .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
                                 .executes(context -> executePause(context.getSource()))
                     )
                     .then(
                         CommandManager.literal("resume")
-                                .requires(source -> source.hasPermissionLevel(2))
+                                .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
                                 .executes(context -> executeResume(context.getSource()))
                     )
                     .then(
                         CommandManager.literal("reset")
-                                .requires(source -> source.hasPermissionLevel(4))
+                                .requires(CommandManager.requirePermissionLevel(CommandManager.OWNERS_CHECK))
                                 .executes(context -> executeReset(context.getSource(), false))
                                 .then(
                                     // generate random string to prevent accidental resets
@@ -68,7 +67,7 @@ public class BingoCommand {
                     )
                     .then(
                         CommandManager.literal("useBingoResourcePack")
-                                .requires(source -> source.hasPermissionLevel(2))
+                                .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
                                 .executes(context -> executeUseBingoResourcePack(context.getSource()))
                                 .then(
                                     CommandManager.literal("true")
@@ -241,6 +240,6 @@ public class BingoCommand {
     private static void playSuccessSound(ServerCommandSource source) {
         ServerPlayerEntity player = source.getPlayer();
         if (player == null) return;
-        player.playSoundToPlayer(SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.MASTER, 1.0F, 1.0F);
+        GameManager.playSoundToPlayer(player, SoundEvents.ENTITY_EXPERIENCE_ORB_PICKUP);
     }
 }

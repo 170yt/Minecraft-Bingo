@@ -7,7 +7,6 @@ import eu.pb4.sgui.api.gui.SimpleGui;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
@@ -83,13 +82,13 @@ public class SettingsGUI extends SimpleGui {
                 }
 
                 if (!setting.configurableWhilePlaying && GameManager.status != GameStatus.IDLE) {
-                    player.playSoundToPlayer(SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.MASTER, 0.5F, 1.0F);
+                    GameManager.playSoundToPlayer(player, SoundEvents.BLOCK_CHEST_LOCKED, 0.5F);
                     return;
                 }
 
                 setting.increment(multiplier);
 
-                player.playSoundToPlayer(SoundEvents.UI_BUTTON_CLICK.value(), SoundCategory.MASTER, 0.5F, 1.0F);
+                GameManager.playSoundToPlayer(player, SoundEvents.UI_BUTTON_CLICK.value(), 0.5F);
             });
             this.setSlot(setting.slot, builder);
         }
@@ -134,13 +133,13 @@ public class SettingsGUI extends SimpleGui {
                 }
 
                 if (GameManager.status != GameStatus.IDLE) {
-                    player.playSoundToPlayer(SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.MASTER, 0.5F, 1.0F);
+                    GameManager.playSoundToPlayer(player, SoundEvents.BLOCK_CHEST_LOCKED, 0.5F);
                     return;
                 }
 
                 pool.toggleEnabled();
 
-                player.playSoundToPlayer(SoundEvents.UI_BUTTON_CLICK.value(), SoundCategory.MASTER, 0.5F, 1.0F);
+                GameManager.playSoundToPlayer(player, SoundEvents.UI_BUTTON_CLICK.value(), 0.5F);
             });
             this.setSlot(currentSlot, builder);
             currentSlot++;
@@ -156,11 +155,11 @@ public class SettingsGUI extends SimpleGui {
             if (clickType != ClickType.MOUSE_LEFT && clickType != ClickType.MOUSE_RIGHT) return;
 
             if (GameManager.status == GameStatus.IDLE) {
-                player.playSoundToPlayer(SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.MASTER, 0.5F, 1.0F);
+                GameManager.playSoundToPlayer(player, SoundEvents.BLOCK_CHEST_LOCKED, 0.5F);
                 return;
             }
 
-            player.playSoundToPlayer(SoundEvents.UI_BUTTON_CLICK.value(), SoundCategory.MASTER, 0.5F, 1.0F);
+            GameManager.playSoundToPlayer(player, SoundEvents.UI_BUTTON_CLICK.value(), 0.5F);
             GameManager.stopGame();
         });
         this.setSlot(48, builder);
@@ -175,11 +174,11 @@ public class SettingsGUI extends SimpleGui {
             if (clickType != ClickType.MOUSE_LEFT && clickType != ClickType.MOUSE_RIGHT) return;
 
             if (GameManager.status != GameStatus.PLAYING && GameManager.status != GameStatus.PAUSED) {
-                player.playSoundToPlayer(SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.MASTER, 0.5F, 1.0F);
+                GameManager.playSoundToPlayer(player, SoundEvents.BLOCK_CHEST_LOCKED, 0.5F);
                 return;
             }
 
-            player.playSoundToPlayer(SoundEvents.UI_BUTTON_CLICK.value(), SoundCategory.MASTER, 0.5F, 1.0F);
+            GameManager.playSoundToPlayer(player, SoundEvents.UI_BUTTON_CLICK.value(), 0.5F);
             if (GameManager.status == GameStatus.PLAYING) GameManager.pauseGame();
             else GameManager.resumeGame();
         });
@@ -195,11 +194,11 @@ public class SettingsGUI extends SimpleGui {
             if (clickType != ClickType.MOUSE_LEFT && clickType != ClickType.MOUSE_RIGHT) return;
 
             if (GameManager.status != GameStatus.IDLE) {
-                player.playSoundToPlayer(SoundEvents.BLOCK_CHEST_LOCKED, SoundCategory.MASTER, 0.5F, 1.0F);
+                GameManager.playSoundToPlayer(player, SoundEvents.BLOCK_CHEST_LOCKED, 0.5F);
                 return;
             }
 
-            player.playSoundToPlayer(SoundEvents.UI_BUTTON_CLICK.value(), SoundCategory.MASTER, 0.5F, 1.0F);
+            GameManager.playSoundToPlayer(player, SoundEvents.UI_BUTTON_CLICK.value(), 0.5F);
             try {
                 GameManager.startGame();
             } catch (CommandSyntaxException e) {
