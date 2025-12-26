@@ -1,5 +1,6 @@
 package x170.bingo.team;
 
+import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.block.Blocks;
 import net.minecraft.scoreboard.ScoreboardDisplaySlot;
 import net.minecraft.scoreboard.Team;
@@ -88,5 +89,16 @@ public class TeamManager {
         }
         leaderboard.sort(Collections.reverseOrder());
         return leaderboard;
+    }
+
+    public static void announceAdvancementToTeam(ServerPlayerEntity player, AdvancementEntry advancement) {
+        BingoTeam team = getBingoTeam(player);
+        if (team == null) return;
+
+        advancement.value().display().ifPresent(display -> {
+            if (display.shouldAnnounceToChat()) {
+                team.sendMessage(display.getFrame().getChatAnnouncementText(advancement, player), false);
+            }
+        });
     }
 }

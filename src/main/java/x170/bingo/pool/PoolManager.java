@@ -9,6 +9,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.text.Text;
 import x170.bingo.Bingo;
+import x170.bingo.goal.AdvancementGoal;
+import x170.bingo.goal.EntityGoal;
 import x170.bingo.goal.Goal;
 import x170.bingo.poolDefaults.*;
 import x170.bingo.setting.Settings;
@@ -48,8 +50,6 @@ public abstract class PoolManager {
     }
 
     public static ArrayList<Goal> generateGoals(int amount) throws CommandSyntaxException {
-        // Set is used to ensure unique goals
-        Set<Goal> activeGoalsSet = new HashSet<>();
         ArrayList<Pool> pools = getPools(false);
 
         if (pools.isEmpty())
@@ -58,12 +58,53 @@ public abstract class PoolManager {
         if (!Settings.ITEM_GOALS.getBool() && !Settings.ENTITY_GOALS.getBool() && !Settings.ADVANCEMENT_GOALS.getBool())
             throw new SimpleCommandExceptionType(Text.literal("No goal types enabled. Enable at least one goal type")).create();
 
-        // Get goals equally distributed from each pool
-        Iterator<Pool> poolIterator = pools.iterator();
+        // Sets are used to ensure unique goals
+        Set<Goal> activeGoalsSet = new HashSet<>();
+        Set<EntityGoal> activeEntityGoals = new HashSet<>();
+        Set<AdvancementGoal> activeAdvancementGoals = new HashSet<>();
+
+        int desiredEntityGoals = Settings.ENTITY_GOALS.getBool() ? Math.round(amount * .15f) : 0;
+        int desiredAdvancementGoals = Settings.ADVANCEMENT_GOALS.getBool() ? Math.round(amount * .15f) : 0;
+
+        // Get goals equally distributed from each pool and try to fulfill desired counts
+
+        // Generate entity goals
+        ArrayList<Pool> poolsCopy = new ArrayList<>(pools);
+        Iterator<Pool> poolIterator = poolsCopy.iterator();
+        while (activeEntityGoals.size() < desiredEntityGoals) {
+            if (!poolIterator.hasNext()) poolIterator = poolsCopy.iterator();
+
+            Pool pool = poolIterator.next();
+            EntityGoal goal = pool.getRandomEntityGoal(activeEntityGoals);
+
+            if (goal == null) poolsCopy.remove(pool);  // Remove pool for next iteration
+            else activeEntityGoals.add(goal);
+
+            if (poolsCopy.isEmpty()) break;
+        }
+
+        // Generate advancement goals
+        poolsCopy = new ArrayList<>(pools);
+        poolIterator = poolsCopy.iterator();
+        while (activeAdvancementGoals.size() < desiredAdvancementGoals) {
+            if (!poolIterator.hasNext()) poolIterator = poolsCopy.iterator();
+
+            Pool pool = poolIterator.next();
+            AdvancementGoal goal = pool.getRandomAdvancementGoal(activeAdvancementGoals);
+
+            if (goal == null) poolsCopy.remove(pool);  // Remove pool for next iteration
+            else activeAdvancementGoals.add(goal);
+
+            if (poolsCopy.isEmpty()) break;
+        }
+
+        activeGoalsSet.addAll(activeEntityGoals);
+        activeGoalsSet.addAll(activeAdvancementGoals);
+
+        // Generate remaining goals from all types
+        poolIterator = pools.iterator();
         while (activeGoalsSet.size() < amount) {
-            if (!poolIterator.hasNext()) {
-                poolIterator = pools.iterator();
-            }
+            if (!poolIterator.hasNext()) poolIterator = pools.iterator();
 
             Pool pool = poolIterator.next();
             Goal goal = pool.getRandomGoal(activeGoalsSet);
@@ -72,9 +113,7 @@ public abstract class PoolManager {
             else activeGoalsSet.add(goal);
 
             if (pools.isEmpty())
-                throw new SimpleCommandExceptionType(
-                        Text.literal("Not enough active goals (wanted " + amount + ", got " + activeGoalsSet.size() + "). Reduce the goal-amount or enable more goal-pools or goal-types")
-                ).create();
+                throw new SimpleCommandExceptionType(Text.literal("Not enough active goals (wanted " + amount + ", got " + activeGoalsSet.size() + "). Reduce the goal-amount or enable more goal-pools or goal-types")).create();
         }
         return new ArrayList<>(activeGoalsSet);
     }
@@ -90,10 +129,7 @@ public abstract class PoolManager {
             }
         }
 
-        try (Stream<Path> stream = Files.list(poolsDir)
-                .filter(Files::isRegularFile)
-                .filter(path -> path.toString().endsWith(".json"))
-        ) {
+        try (Stream<Path> stream = Files.list(poolsDir).filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".json"))) {
             if (stream.findAny().isEmpty()) {
                 Bingo.LOGGER.info("No pools found. Saving default pools...");
                 saveDefaultPools(poolsDir);
@@ -103,10 +139,7 @@ public abstract class PoolManager {
         }
 
         ArrayList<Pool> pools = new ArrayList<>();
-        try (Stream<Path> stream = Files.list(poolsDir)
-                .filter(Files::isRegularFile)
-                .filter(path -> path.toString().endsWith(".json"))
-        ) {
+        try (Stream<Path> stream = Files.list(poolsDir).filter(Files::isRegularFile).filter(path -> path.toString().endsWith(".json"))) {
             stream.forEach(filePath -> {
                 if (!filePath.toString().endsWith(".json")) return;
                 Pool pool = loadPool(filePath);
@@ -132,10 +165,7 @@ public abstract class PoolManager {
 
     private static Pool loadPool(Path filePath) {
         // Load the pools config file
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Item.class, new ItemTypeAdapter())
-                .registerTypeAdapter(EntityType.class, new EntityTypeTypeAdapter())
-                .create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Item.class, new ItemTypeAdapter()).registerTypeAdapter(EntityType.class, new EntityTypeTypeAdapter()).create();
         try {
             PoolConfig poolConfig = gson.fromJson(Files.readString(filePath), PoolConfig.class);
             return new Pool(filePath.getFileName().toString().replace(".json", ""), poolConfig);
@@ -154,12 +184,7 @@ public abstract class PoolManager {
         defaultPools.put("05_end.json", new EndPool());
         defaultPools.put("06_extreme.json", new ExtremePool());
 
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Item.class, new ItemTypeAdapter())
-                .registerTypeAdapter(EntityType.class, new EntityTypeTypeAdapter())
-                .excludeFieldsWithoutExposeAnnotation()
-                .setPrettyPrinting()
-                .create();
+        Gson gson = new GsonBuilder().registerTypeAdapter(Item.class, new ItemTypeAdapter()).registerTypeAdapter(EntityType.class, new EntityTypeTypeAdapter()).excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
         for (Map.Entry<String, PoolConfig> entry : defaultPools.entrySet()) {
             try {
                 String json = gson.toJson(entry.getValue());

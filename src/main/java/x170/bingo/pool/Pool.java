@@ -93,13 +93,35 @@ public class Pool {
         enabled = !enabled;
     }
 
-    public Goal getRandomGoal(Collection<Goal> excludedGoals) {
+    public Goal getRandomGoal(Collection<Goal> excluded) {
         ArrayList<Goal> goals = new ArrayList<>();
         if (Settings.ITEM_GOALS.getBool()) goals.addAll(itemGoals);
         if (Settings.ENTITY_GOALS.getBool()) goals.addAll(entityGoals);
         if (Settings.ADVANCEMENT_GOALS.getBool()) goals.addAll(advancementGoals);
 
-        goals.removeAll(excludedGoals);
+        goals.removeAll(excluded);
+        if (goals.isEmpty()) return null;
+
+        Collections.shuffle(goals);
+        return goals.getFirst();
+    }
+
+    public EntityGoal getRandomEntityGoal(Collection<EntityGoal> excluded) {
+        if (!Settings.ENTITY_GOALS.getBool()) return null;
+
+        ArrayList<EntityGoal> goals = new ArrayList<>(entityGoals);
+        goals.removeAll(excluded);
+        if (goals.isEmpty()) return null;
+
+        Collections.shuffle(goals);
+        return goals.getFirst();
+    }
+
+    public AdvancementGoal getRandomAdvancementGoal(Collection<AdvancementGoal> excluded) {
+        if (!Settings.ADVANCEMENT_GOALS.getBool()) return null;
+
+        ArrayList<AdvancementGoal> goals = new ArrayList<>(advancementGoals);
+        goals.removeAll(excluded);
         if (goals.isEmpty()) return null;
 
         Collections.shuffle(goals);

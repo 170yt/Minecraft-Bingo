@@ -39,6 +39,7 @@ public class Bingo implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(TopCommand::register);
         PlayerInventoryChangedCallback.EVENT.register(TeamManager::checkGoal);
         PlayerAdvancementAchievedCallback.EVENT.register(TeamManager::checkGoal);
+        PlayerAdvancementAchievedCallback.EVENT.register(TeamManager::announceAdvancementToTeam);
         ServerTickEvents.START_SERVER_TICK.register(GameManager::onServerTick);
 
         PlayerBlockBreakEvents.BEFORE.register(new PlayerBlockBreakHandler());
