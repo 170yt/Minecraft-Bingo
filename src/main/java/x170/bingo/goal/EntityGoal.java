@@ -32,6 +32,14 @@ public class EntityGoal implements Goal {
         this.entityType = entityType;
     }
 
+    private static Item getSpawnEgg(EntityType<?> entityType) {
+        String spawnEggPath = entityType.getUntranslatedName() + "_spawn_egg";
+        if (Identifier.isPathValid(spawnEggPath))
+            return Registries.ITEM.get(Identifier.of("minecraft", spawnEggPath));
+        else
+            return Items.SPAWNER;
+    }
+
     public String getName() {
         return name;
     }
@@ -46,14 +54,6 @@ public class EntityGoal implements Goal {
 
     public String toString() {
         return displayItemIcon + getName();
-    }
-
-    private static Item getSpawnEgg(EntityType<?> entityType) {
-        String spawnEggPath = entityType.getUntranslatedName() + "_spawn_egg";
-        if (Identifier.isPathValid(spawnEggPath))
-            return Registries.ITEM.get(Identifier.of("minecraft", spawnEggPath));
-        else
-            return Items.SPAWNER;
     }
 
     @Override

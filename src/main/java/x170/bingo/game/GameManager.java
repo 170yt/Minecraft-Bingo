@@ -18,13 +18,13 @@ import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
-import net.minecraft.world.rule.GameRules;
 import net.minecraft.world.TeleportTarget;
+import net.minecraft.world.rule.GameRules;
 import x170.bingo.Bingo;
 import x170.bingo.goal.Goal;
 import x170.bingo.pool.PoolManager;
-import x170.bingo.setting.SettingsManager;
 import x170.bingo.setting.Settings;
+import x170.bingo.setting.SettingsManager;
 import x170.bingo.team.BingoTeam;
 import x170.bingo.team.TeamGoalManager;
 import x170.bingo.team.TeamGoalsGUI;
@@ -38,10 +38,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class GameManager {
+public abstract class GameManager {
+    private static final Path itemIconsPath = FabricLoader.getInstance().getConfigDir().resolve("bingo/item_icon_mappings.json");
     public static GameStatus status = GameStatus.IDLE;
     public static boolean resetWorldOnStop = false;
-    private static final Path itemIconsPath = FabricLoader.getInstance().getConfigDir().resolve("bingo/item_icon_mappings.json");
     private static HashMap itemIcons = new HashMap<>();
 
     public static void onServerTick(MinecraftServer server) {

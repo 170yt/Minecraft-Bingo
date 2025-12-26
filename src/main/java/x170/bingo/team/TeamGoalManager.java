@@ -63,9 +63,12 @@ public class TeamGoalManager {
 
     public Goal getGoal(Object goalObject) {
         return switch (goalObject) {
-            case ItemStack itemStack -> itemGoals.stream().filter(itemGoal -> itemGoal.getItem().equals(itemStack.getItem())).findFirst().orElse(null);
-            case EntityType<?> entityType -> entityGoals.stream().filter(entityGoal -> entityGoal.getEntityType().equals(entityType)).findFirst().orElse(null);
-            case AdvancementEntry advancement -> advancementGoals.stream().filter(advancementGoal -> advancementGoal.getAdvancement().equals(advancement)).findFirst().orElse(null);
+            case ItemStack itemStack ->
+                    itemGoals.stream().filter(itemGoal -> itemGoal.getItem().equals(itemStack.getItem())).findFirst().orElse(null);
+            case EntityType<?> entityType ->
+                    entityGoals.stream().filter(entityGoal -> entityGoal.getEntityType().equals(entityType)).findFirst().orElse(null);
+            case AdvancementEntry advancement ->
+                    advancementGoals.stream().filter(advancementGoal -> advancementGoal.getAdvancement().equals(advancement)).findFirst().orElse(null);
             default -> null;
         };
     }

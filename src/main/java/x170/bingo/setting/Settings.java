@@ -51,11 +51,11 @@ public enum Settings {
     public final double max;
     public final double stepSize;
     public final boolean configurableWhilePlaying;
+    public final boolean isBoolean;
     @Nullable
     private final Runnable onValueChange;
-    public final boolean isBoolean;
-    private double value;
     private final DecimalFormat df = new DecimalFormat("#.##");
+    private double value;
 
     // Boolean hidden
     Settings(boolean defaultValue) {
@@ -105,7 +105,8 @@ public enum Settings {
         // Clamp the value to the min and max values
         this.value = Math.clamp(value, min, max);
         if (onValueChange != null) onValueChange.run();
-        if (slot != -1) Bingo.SERVER.getPlayerManager().broadcast(Text.literal("§6§lSettings§r: " + name + " is now " + this), false);
+        if (slot != -1)
+            Bingo.SERVER.getPlayerManager().broadcast(Text.literal("§6§lSettings§r: " + name + " is now " + this), false);
     }
 
     public void addValue(double amount) {

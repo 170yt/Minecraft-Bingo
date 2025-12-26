@@ -1,7 +1,8 @@
 package x170.bingo.team;
 
 import net.minecraft.block.Blocks;
-import net.minecraft.scoreboard.*;
+import net.minecraft.scoreboard.ScoreboardDisplaySlot;
+import net.minecraft.scoreboard.Team;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -10,7 +11,10 @@ import x170.bingo.game.GameManager;
 import x170.bingo.game.GameStatus;
 import x170.bingo.goal.Goal;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class TeamManager {
     private static final HashMap<String, BingoTeam> teams = new HashMap<>();
@@ -19,7 +23,7 @@ public class TeamManager {
         teams.put("Gray", new BingoTeam("Gray", Formatting.GRAY, Blocks.GRAY_CONCRETE.asItem(), 0, ScoreboardDisplaySlot.TEAM_GRAY));
         teams.put("Red", new BingoTeam("Red", Formatting.RED, Blocks.RED_CONCRETE.asItem(), 1, ScoreboardDisplaySlot.TEAM_RED));
         teams.put("Orange", new BingoTeam("Orange", Formatting.GOLD, Blocks.ORANGE_CONCRETE.asItem(), 2, ScoreboardDisplaySlot.TEAM_GOLD));
-        teams.put("Yellow", new BingoTeam("Yellow", Formatting.YELLOW, Blocks.YELLOW_CONCRETE.asItem(),3, ScoreboardDisplaySlot.TEAM_YELLOW));
+        teams.put("Yellow", new BingoTeam("Yellow", Formatting.YELLOW, Blocks.YELLOW_CONCRETE.asItem(), 3, ScoreboardDisplaySlot.TEAM_YELLOW));
         teams.put("Green", new BingoTeam("Green", Formatting.GREEN, Blocks.LIME_CONCRETE.asItem(), 4, ScoreboardDisplaySlot.TEAM_GREEN));
         teams.put("Cyan", new BingoTeam("Cyan", Formatting.AQUA, Blocks.CYAN_CONCRETE.asItem(), 5, ScoreboardDisplaySlot.TEAM_AQUA));
         teams.put("Blue", new BingoTeam("Blue", Formatting.BLUE, Blocks.BLUE_CONCRETE.asItem(), 6, ScoreboardDisplaySlot.TEAM_BLUE));

@@ -13,14 +13,6 @@ import org.jetbrains.annotations.Nullable;
 import x170.bingo.setting.Settings;
 
 public interface Goal {
-    String getName();
-    ItemStack getDisplayItem();
-    String toString();
-    @Override
-    boolean equals(Object obj);
-    @Override
-    int hashCode();
-
     static ItemStack generateDisplayItem(Item item, @Nullable Text name, @Nullable Text description) {
         return generateDisplayItem(item, name, description, null);
     }
@@ -48,4 +40,16 @@ public interface Goal {
 
         return displayItem;
     }
+
+    String getName();
+
+    ItemStack getDisplayItem();
+
+    String toString();
+
+    @Override
+    boolean equals(Object obj);
+
+    @Override
+    int hashCode();
 }

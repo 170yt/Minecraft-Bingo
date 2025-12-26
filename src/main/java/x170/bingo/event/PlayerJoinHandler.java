@@ -9,8 +9,8 @@ import net.minecraft.world.GameMode;
 import org.jetbrains.annotations.NotNull;
 import x170.bingo.game.GameManager;
 import x170.bingo.game.GameStatus;
-import x170.bingo.team.TeamManager;
 import x170.bingo.setting.SettingsManager;
+import x170.bingo.team.TeamManager;
 import x170.bingo.team.TeamSelectionGUI;
 
 public class PlayerJoinHandler implements ServerPlayConnectionEvents.Join {

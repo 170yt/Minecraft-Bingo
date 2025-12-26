@@ -6,7 +6,8 @@ import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import x170.bingo.game.*;
+import x170.bingo.game.GameManager;
+import x170.bingo.game.GameStatus;
 import x170.bingo.setting.Settings;
 import x170.bingo.team.BingoTeam;
 import x170.bingo.team.TeamManager;
@@ -14,9 +15,9 @@ import x170.bingo.team.TeamManager;
 public class BackpackCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess commandRegistryAccess, CommandManager.RegistrationEnvironment registrationEnvironment) {
         dispatcher.register(CommandManager.literal("backpack")
-                        .executes(context -> execute(context.getSource())));
+                .executes(context -> execute(context.getSource())));
         dispatcher.register(CommandManager.literal("bp")
-                        .executes(context -> execute(context.getSource())));
+                .executes(context -> execute(context.getSource())));
         dispatcher.register(CommandManager.literal("ec")
                 .executes(context -> execute(context.getSource())));
     }

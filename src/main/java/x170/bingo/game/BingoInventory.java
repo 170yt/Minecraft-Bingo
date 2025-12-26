@@ -21,8 +21,8 @@ public class BingoInventory extends SimpleInventory {
                 new SimpleNamedScreenHandlerFactory(
                         (i, playerInventory, playerEntity) ->
                                 this.large
-                                    ? GenericContainerScreenHandler.createGeneric9x6(i, playerInventory, this)
-                                    : GenericContainerScreenHandler.createGeneric9x3(i, playerInventory, this),
+                                        ? GenericContainerScreenHandler.createGeneric9x6(i, playerInventory, this)
+                                        : GenericContainerScreenHandler.createGeneric9x3(i, playerInventory, this),
                         Text.literal(name)
                 )
         );

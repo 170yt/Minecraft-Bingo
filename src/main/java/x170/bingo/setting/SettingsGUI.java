@@ -2,7 +2,7 @@ package x170.bingo.setting;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import eu.pb4.sgui.api.ClickType;
-import eu.pb4.sgui.api.elements.*;
+import eu.pb4.sgui.api.elements.GuiElementBuilder;
 import eu.pb4.sgui.api.gui.SimpleGui;
 import net.minecraft.item.Items;
 import net.minecraft.screen.ScreenHandlerType;
@@ -96,13 +96,13 @@ public class SettingsGUI extends SimpleGui {
         int startSlot = 27;  // TODO: Implement dynamic slot calculation
         int currentSlot = startSlot;
         for (Pool pool : PoolManager.getPools(true)) {
-             GuiElementBuilder builder = new GuiElementBuilder(pool.getDisplayItem())
+            GuiElementBuilder builder = new GuiElementBuilder(pool.getDisplayItem())
                     .setName(Text.literal(pool.getName()).formatted(Formatting.GOLD));
 
             if (GameManager.status != GameStatus.IDLE)
                 builder.addLoreLine(Text.literal("Locked while playing").formatted(Formatting.RED));
 
-            for (String line : pool.getDescription()) {
+            for (String line : pool.getDescription().split("\n")) {
                 builder.addLoreLine(Text.literal(line).formatted(Formatting.GRAY));
             }
 

@@ -10,7 +10,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import x170.bingo.Bingo;
-import x170.bingo.game.*;
+import x170.bingo.game.GameManager;
+import x170.bingo.game.GameStatus;
 import x170.bingo.setting.Settings;
 import x170.bingo.setting.SettingsGUI;
 import x170.bingo.team.BingoTeam;
@@ -23,61 +24,61 @@ import java.util.UUID;
 public class BingoCommand {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess commandRegistryAccess, CommandManager.RegistrationEnvironment registrationEnvironment) {
         LiteralCommandNode<ServerCommandSource> literalCommandNode = dispatcher.register(
-            CommandManager.literal("bingo")
-                    // .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
-                    .executes(context -> executeBingo(context.getSource()))
-                    .then(
-                            CommandManager.literal("teams")
-                                    .executes(context -> executeTeams(context.getSource()))
-                    )
-                    .then(
-                        CommandManager.literal("settings")
-                                .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
-                                .executes(context -> executeSettings(context.getSource()))
-                    )
-                    .then(
-                        CommandManager.literal("start")
-                                .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
-                                .executes(context -> executeStart(context.getSource()))
-                    )
-                    .then(
-                        CommandManager.literal("stop")
-                                .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
-                                .executes(context -> executeStop(context.getSource()))
-                    )
-                    .then(
-                        CommandManager.literal("pause")
-                                .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
-                                .executes(context -> executePause(context.getSource()))
-                    )
-                    .then(
-                        CommandManager.literal("resume")
-                                .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
-                                .executes(context -> executeResume(context.getSource()))
-                    )
-                    .then(
-                        CommandManager.literal("reset")
-                                .requires(CommandManager.requirePermissionLevel(CommandManager.OWNERS_CHECK))
-                                .executes(context -> executeReset(context.getSource(), false))
-                                .then(
-                                    // generate random string to prevent accidental resets
-                                    CommandManager.literal(UUID.randomUUID().toString().split("-")[0])
-                                            .executes(context -> executeReset(context.getSource(), true))
-                                )
-                    )
-                    .then(
-                        CommandManager.literal("useBingoResourcePack")
-                                .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
-                                .executes(context -> executeUseBingoResourcePack(context.getSource()))
-                                .then(
-                                    CommandManager.literal("true")
-                                            .executes(context -> executeUseBingoResourcePack(context.getSource(), true))
-                                )
-                                .then(
-                                    CommandManager.literal("false")
-                                            .executes(context -> executeUseBingoResourcePack(context.getSource(), false))
-                                )
-                    )
+                CommandManager.literal("bingo")
+                        // .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
+                        .executes(context -> executeBingo(context.getSource()))
+                        .then(
+                                CommandManager.literal("teams")
+                                        .executes(context -> executeTeams(context.getSource()))
+                        )
+                        .then(
+                                CommandManager.literal("settings")
+                                        .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
+                                        .executes(context -> executeSettings(context.getSource()))
+                        )
+                        .then(
+                                CommandManager.literal("start")
+                                        .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
+                                        .executes(context -> executeStart(context.getSource()))
+                        )
+                        .then(
+                                CommandManager.literal("stop")
+                                        .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
+                                        .executes(context -> executeStop(context.getSource()))
+                        )
+                        .then(
+                                CommandManager.literal("pause")
+                                        .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
+                                        .executes(context -> executePause(context.getSource()))
+                        )
+                        .then(
+                                CommandManager.literal("resume")
+                                        .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
+                                        .executes(context -> executeResume(context.getSource()))
+                        )
+                        .then(
+                                CommandManager.literal("reset")
+                                        .requires(CommandManager.requirePermissionLevel(CommandManager.OWNERS_CHECK))
+                                        .executes(context -> executeReset(context.getSource(), false))
+                                        .then(
+                                                // generate random string to prevent accidental resets
+                                                CommandManager.literal(UUID.randomUUID().toString().split("-")[0])
+                                                        .executes(context -> executeReset(context.getSource(), true))
+                                        )
+                        )
+                        .then(
+                                CommandManager.literal("useBingoResourcePack")
+                                        .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
+                                        .executes(context -> executeUseBingoResourcePack(context.getSource()))
+                                        .then(
+                                                CommandManager.literal("true")
+                                                        .executes(context -> executeUseBingoResourcePack(context.getSource(), true))
+                                        )
+                                        .then(
+                                                CommandManager.literal("false")
+                                                        .executes(context -> executeUseBingoResourcePack(context.getSource(), false))
+                                        )
+                        )
         );
         dispatcher.register(CommandManager.literal("b")
                 .executes(context -> executeBingo(context.getSource()))

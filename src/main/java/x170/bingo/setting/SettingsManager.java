@@ -19,6 +19,7 @@ import x170.bingo.pool.PoolManager;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.stream.Stream;
 
 public class SettingsManager {
     private static final Path settingsPath = FabricLoader.getInstance().getConfigDir().resolve("bingo/bingo.settings");
@@ -95,12 +96,13 @@ public class SettingsManager {
             return;
         }
 
-        try {
-            Files.lines(settingsPath).forEach(line -> {
+        try (Stream<String> lines = Files.lines(settingsPath)) {
+            lines.forEach(line -> {
                 String[] split = line.split("=");
                 if (split[0].startsWith(poolPrefix)) {
-                    String itemPoolName = split[0].substring(poolPrefix.length());
-                    PoolManager.getPool(itemPoolName).setEnabled(Boolean.parseBoolean(split[1]));
+                    String poolId = split[0].substring(poolPrefix.length());
+                    Pool pool = PoolManager.getPool(poolId);
+                    if (pool != null) pool.setEnabled(Boolean.parseBoolean(split[1]));
                 } else {
                     Settings setting = Settings.valueOf(split[0]);
                     setting.setValue(Double.parseDouble(split[1]));
@@ -125,7 +127,7 @@ public class SettingsManager {
             for (Settings setting : Settings.values())
                 writer.println(setting.name() + "=" + setting.getDouble());
             for (Pool pool : PoolManager.getPools(true))
-                writer.println(poolPrefix + pool.getName() + "=" + pool.isEnabled());
+                writer.println(poolPrefix + pool.getId() + "=" + pool.isEnabled());
             writer.flush();
         } catch (Exception e) {
             Bingo.LOGGER.error("Failed to save settings to file", e);

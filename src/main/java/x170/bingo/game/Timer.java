@@ -14,8 +14,8 @@ public class Timer {
         int seconds = time % 60;
 
         String timeString = "";
-        if (hours > 0) timeString+= hours + "h ";
-        if (minutes > 0) timeString+= minutes + "m ";
+        if (hours > 0) timeString += hours + "h ";
+        if (minutes > 0) timeString += minutes + "m ";
         timeString += seconds + "s";
 
         if (paused) timeString += " (paused)";
