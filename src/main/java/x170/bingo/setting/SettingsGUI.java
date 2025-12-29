@@ -29,8 +29,6 @@ public class SettingsGUI extends SimpleGui {
     @Override
     public void onTick() {
         for (Settings setting : Settings.values()) {
-            if (setting.slot == -1) continue;
-
             GuiElementBuilder builder = new GuiElementBuilder(setting.item)
                     .setName(Text.literal(setting.name).formatted(Formatting.GOLD));
 
@@ -102,8 +100,10 @@ public class SettingsGUI extends SimpleGui {
             if (GameManager.status != GameStatus.IDLE)
                 builder.addLoreLine(Text.literal("Locked while playing").formatted(Formatting.RED));
 
-            for (String line : pool.getDescription().split("\n")) {
-                builder.addLoreLine(Text.literal(line).formatted(Formatting.GRAY));
+            if (pool.getDescription() != null && !pool.getDescription().isEmpty()) {
+                for (String line : pool.getDescription().split("\n")) {
+                    builder.addLoreLine(Text.literal(line).formatted(Formatting.GRAY));
+                }
             }
 
             MutableText itemGoalText = Text.literal(ItemGoal.DISPLAY_NAME + ": " + pool.getItemGoalCount()).formatted(Formatting.GRAY);

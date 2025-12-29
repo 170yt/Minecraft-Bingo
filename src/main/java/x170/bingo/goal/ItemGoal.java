@@ -4,7 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
-import x170.bingo.game.GameManager;
+import x170.bingo.icon.IconManager;
 
 public class ItemGoal implements Goal {
     public static final String DISPLAY_NAME = "Items";
@@ -13,7 +13,7 @@ public class ItemGoal implements Goal {
     private final String name;
     private final ItemStack displayItem;
     private final Item item;
-    private final String itemIcon;
+    private final Text displayText;
 
     public ItemGoal(Item item) {
         this.name = item.getName().getString();
@@ -23,7 +23,7 @@ public class ItemGoal implements Goal {
                 Text.literal("Collect " + this.name)
         );
         this.item = item;
-        this.itemIcon = GameManager.getItemIcon(item);
+        this.displayText = IconManager.getItemIcon(item).append(Text.literal(this.name));
     }
 
     public String getName() {
@@ -38,8 +38,8 @@ public class ItemGoal implements Goal {
         return item;
     }
 
-    public String toString() {
-        return itemIcon + getName();
+    public Text getDisplayText() {
+        return displayText;
     }
 
     @Override

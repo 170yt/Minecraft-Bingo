@@ -1,12 +1,9 @@
 package x170.bingo.game;
 
-import com.google.gson.Gson;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.entity.player.HungerManager;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -30,19 +27,13 @@ import x170.bingo.team.TeamGoalManager;
 import x170.bingo.team.TeamGoalsGUI;
 import x170.bingo.team.TeamManager;
 
-import java.io.BufferedReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 
 public abstract class GameManager {
-    private static final Path itemIconsPath = FabricLoader.getInstance().getConfigDir().resolve("bingo/item_icon_mappings.json");
     public static GameStatus status = GameStatus.IDLE;
     public static boolean resetWorldOnStop = false;
-    private static HashMap itemIcons = new HashMap<>();
 
     public static void onServerTick(MinecraftServer server) {
         boolean onceASecond = Bingo.SERVER.getTicks() % 20 == 0;
@@ -202,7 +193,7 @@ public abstract class GameManager {
                         .withClickEvent(runCommandOnClick ? new ClickEvent.RunCommand(command) : new ClickEvent.SuggestCommand(command))
                         .withHoverEvent(new HoverEvent.ShowText(Text.literal("Click to " + description)))
                 ))
-                .append(Text.literal(" to " + description + "."));
+                .append(Text.literal("§7 to " + description + "."));
     }
 
     public static void resetPlayer(ServerPlayerEntity player) {
@@ -227,36 +218,5 @@ public abstract class GameManager {
 
     public static void playSoundToPlayer(ServerPlayerEntity player, SoundEvent soundEvent, float volume) {
         player.getEntityWorld().playSound(null, player.getBlockPos(), soundEvent, SoundCategory.MASTER, volume, 1.0F);
-    }
-
-    public static void loadItemIcons() {
-        if (!Settings.USE_BINGO_RESOURCE_PACK.getBool()) {
-            Bingo.LOGGER.warn("Not using custom icons. Setting useBingoResourcePack is disabled.");
-            return;
-        }
-
-        // Load custom icons from file if it exists
-        if (!Files.exists(itemIconsPath)) {
-            Bingo.LOGGER.warn("Not using custom icons. File does not exist: {}", itemIconsPath);
-            return;
-        }
-
-        // Get the JSON object from the file using Gson
-        try (BufferedReader reader = Files.newBufferedReader(itemIconsPath)) {
-            itemIcons = new Gson().fromJson(reader, HashMap.class);
-        } catch (Exception e) {
-            Bingo.LOGGER.error("Failed to load custom icons from file", e);
-        }
-    }
-
-    public static String getItemIcon(Item item) {
-        return getItemIcon(item, false);
-    }
-
-    public static String getItemIcon(Item item, boolean advancement) {
-        if (!Settings.USE_BINGO_RESOURCE_PACK.getBool()) return "";
-        String name = item.toString().split(":")[1] + (advancement ? "_advancement" : "");
-        String icon = (String) itemIcons.get(name);
-        return icon == null ? "" : "§r§f" + icon + " ";
     }
 }

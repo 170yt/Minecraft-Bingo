@@ -24,7 +24,6 @@ The mod is designed to be played on a multiplayer server, but can also be played
 - `/bingo pause` - `OP` Pauses the current bingo game
 - `/bingo resume` - `OP` Resumes the current bingo game
 - `/bingo reset <suggested random string>` - `OP` Stops the server and resets the world with a new seed. The random string at the end is used to prevent accidental resets
-- `/bingo useBingoResourcePack <true|false>` - `OP` Tells the game whether the players are using the resource pack or not
 - `/top` - Teleports you to the surface (or to the world spawn if you are in the nether or the end)
 - `/backpack` or `/bp` or `/ec` - Opens the team backpack
 
@@ -134,11 +133,9 @@ Includes: dyed Shulker Boxes, aged Copper Variants, Trial Chambers, Beacons
 - **I see weird textures in the bingo goals inventory and the scoreboard. What can I do?**<br>
   ![Bingo Goals Inventory without Resource Pack](images/Bingo-Goals-Missing-Textures.png)<br>
   ![Scoreboard without Resource Pack](images/Bingo-Scoreboard-Missing-Textures.png)<br>
-  You need to install the [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack).<br>
-  If you do not want to use the resource pack, you can disable the use of it with the command `/bingo useBingoResourcePack false` (you need to restart the server for this to take effect).
+  You need to install the [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack).
 - **I cannot see the icons in the scoreboard. What can I do?**<br>
-  Make sure that the item-icon mappings file is present (for instructions see [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack)).<br>
-  Also, make sure that the setting `useBingoResourcePack` is set to `true`. You can see the current state with the command `/bingo useBingoResourcePack`.
+  Make sure that the item-icon mappings file is present (for instructions see [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack)).
 - **Do I need to install the mod on the client side?**<br>
   No, the mod is server-side only and does not require the client to have it installed if it's already installed on the server.<br>
   The mod is designed to be played on a server with vanilla clients and does not require any client-side mods.

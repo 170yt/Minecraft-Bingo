@@ -12,7 +12,6 @@ import net.minecraft.text.Text;
 import x170.bingo.Bingo;
 import x170.bingo.game.GameManager;
 import x170.bingo.game.GameStatus;
-import x170.bingo.setting.Settings;
 import x170.bingo.setting.SettingsGUI;
 import x170.bingo.team.BingoTeam;
 import x170.bingo.team.TeamGoalsGUI;
@@ -64,19 +63,6 @@ public class BingoCommand {
                                                 // generate random string to prevent accidental resets
                                                 CommandManager.literal(UUID.randomUUID().toString().split("-")[0])
                                                         .executes(context -> executeReset(context.getSource(), true))
-                                        )
-                        )
-                        .then(
-                                CommandManager.literal("useBingoResourcePack")
-                                        .requires(CommandManager.requirePermissionLevel(CommandManager.GAMEMASTERS_CHECK))
-                                        .executes(context -> executeUseBingoResourcePack(context.getSource()))
-                                        .then(
-                                                CommandManager.literal("true")
-                                                        .executes(context -> executeUseBingoResourcePack(context.getSource(), true))
-                                        )
-                                        .then(
-                                                CommandManager.literal("false")
-                                                        .executes(context -> executeUseBingoResourcePack(context.getSource(), false))
                                         )
                         )
         );
@@ -222,19 +208,6 @@ public class BingoCommand {
 
         GameManager.resetWorldOnStop = true;
         Bingo.SERVER.stop(false);
-        return 1;
-    }
-
-    private static int executeUseBingoResourcePack(ServerCommandSource source) {
-        source.sendMessage(Text.literal("Setting useBingoResourcePack is currently set to: " + Settings.USE_BINGO_RESOURCE_PACK.getBool()));
-        return 1;
-    }
-
-    private static int executeUseBingoResourcePack(ServerCommandSource source, boolean value) {
-        Settings.USE_BINGO_RESOURCE_PACK.setValue(value);
-        source.sendMessage(Text.literal("Setting useBingoResourcePack is now set to: " + value)
-                .append(Text.literal("\nPlease restart the server to apply the changes."))
-        );
         return 1;
     }
 

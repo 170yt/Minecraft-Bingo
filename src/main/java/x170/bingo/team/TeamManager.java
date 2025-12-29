@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
-public class TeamManager {
+public abstract class TeamManager {
     private static final HashMap<String, BingoTeam> teams = new HashMap<>();
 
     public static void createTeams() {
@@ -52,7 +52,7 @@ public class TeamManager {
             Bingo.LOGGER.info("Team {} (Player {}) got {}", team.getName(), player.getName().getString(), goal.getName());
 
             team.sendMessage(
-                    Text.literal("+ ").formatted(Formatting.GREEN).append(goal.toString()),
+                    Text.literal("§a+ §r").append(goal.getDisplayText()),
                     true
             );
 

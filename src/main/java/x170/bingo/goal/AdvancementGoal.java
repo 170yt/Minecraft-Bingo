@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import x170.bingo.game.GameManager;
+import x170.bingo.icon.IconManager;
 
 public class AdvancementGoal implements Goal {
     public static final String DISPLAY_NAME = "Advancements";
@@ -15,7 +15,7 @@ public class AdvancementGoal implements Goal {
     public static final Item DISPLAY_ITEM = Items.GRASS_BLOCK;
     private final String name;
     private final ItemStack displayItem;
-    private final String displayItemIcon;
+    private final Text displayText;
     private final AdvancementEntry advancement;
 
     public AdvancementGoal(AdvancementEntry advancement) {
@@ -30,7 +30,7 @@ public class AdvancementGoal implements Goal {
                 advancementDisplay.getDescription(),
                 Identifier.of("bingo", displayItem.toString().split(":")[1] + "_advancement")
         );
-        this.displayItemIcon = GameManager.getItemIcon(displayItem, true);
+        this.displayText = IconManager.getAdvancementIcon(displayItem).append(Text.literal(this.name));
         this.advancement = advancement;
     }
 
@@ -46,8 +46,8 @@ public class AdvancementGoal implements Goal {
         return advancement;
     }
 
-    public String toString() {
-        return displayItemIcon + getName();
+    public Text getDisplayText() {
+        return displayText;
     }
 
     @Override

@@ -12,7 +12,6 @@ import x170.bingo.goal.ItemGoal;
 import java.text.DecimalFormat;
 
 public enum Settings {
-    USE_BINGO_RESOURCE_PACK(true),
     PVP(0, Items.DIAMOND_SWORD, "PvP", "Enable player vs player combat",
             false, true, SettingsManager::onPvPChange),
     NO_DAMAGE(1, Items.GOLDEN_APPLE, "No Damage", "Players do not take damage",
@@ -57,11 +56,6 @@ public enum Settings {
     private final DecimalFormat df = new DecimalFormat("#.##");
     private double value;
 
-    // Boolean hidden
-    Settings(boolean defaultValue) {
-        this(-1, null, null, null, defaultValue, false, null);
-    }
-
     // Boolean
     Settings(int slot, Item item, String name, String description, boolean defaultValue, boolean configurableWhilePlaying, @Nullable Runnable onValueChange) {
         this(slot, item, name, description, defaultValue ? 1 : 0, 0, 1, 1, configurableWhilePlaying, onValueChange, true);
@@ -105,8 +99,7 @@ public enum Settings {
         // Clamp the value to the min and max values
         this.value = Math.clamp(value, min, max);
         if (onValueChange != null) onValueChange.run();
-        if (slot != -1)
-            Bingo.SERVER.getPlayerManager().broadcast(Text.literal("§6§lSettings§r: " + name + " is now " + this), false);
+        Bingo.SERVER.getPlayerManager().broadcast(Text.literal("§6§lSettings§r: " + name + " is now " + this), false);
     }
 
     public void addValue(double amount) {

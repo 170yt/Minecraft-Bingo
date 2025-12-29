@@ -117,12 +117,18 @@ public class BingoTeam {
         // If more than 15 items, show the first 14 and "+X more"
         if (goals.size() > 15) {
             for (int i = 0; i < 14; i++) {
-                scoreboard.getOrCreateScore(ScoreHolder.fromName(goals.get(i).toString()), objective).setScore(15 - i);
+                Goal goal = goals.get(i);
+                ScoreAccess score = scoreboard.getOrCreateScore(ScoreHolder.fromName(goal.getName()), objective);
+                score.setScore(15 - i);
+                score.setDisplayText(goal.getDisplayText());
             }
             scoreboard.getOrCreateScore(ScoreHolder.fromName("§7+§r" + (goals.size() - 14) + " more"), objective).setScore(1);
         } else {
             for (int i = 0; i < goals.size(); i++) {
-                scoreboard.getOrCreateScore(ScoreHolder.fromName(goals.get(i).toString()), objective).setScore(goals.size() - i);
+                Goal goal = goals.get(i);
+                ScoreAccess score = scoreboard.getOrCreateScore(ScoreHolder.fromName(goal.getName()), objective);
+                score.setScore(goals.size() - i);
+                score.setDisplayText(goal.getDisplayText());
             }
         }
     }
