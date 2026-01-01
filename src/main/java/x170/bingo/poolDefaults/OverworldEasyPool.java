@@ -168,7 +168,6 @@ public class OverworldEasyPool extends PoolConfig {
                         Items.DIRT,
                         Items.FEATHER,
                         Items.FIELD_MASONED_BANNER_PATTERN,
-                        Items.FILLED_MAP,
                         Items.FIREFLY_BUSH,
                         Items.FIREWORK_ROCKET,
                         Items.FIREWORK_STAR,

@@ -111,6 +111,7 @@ public class OverworldMediumPool extends PoolConfig {
                         Items.ENDER_PEARL,
                         Items.FERMENTED_SPIDER_EYE,
                         Items.FERN,
+                        Items.FILLED_MAP,
                         Items.FIRE_CHARGE,
                         Items.FLOWERING_AZALEA_LEAVES,
                         Items.FLOWERING_AZALEA,
