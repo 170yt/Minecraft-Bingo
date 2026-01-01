@@ -5,6 +5,8 @@ import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.entity.player.HungerManager;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
@@ -198,14 +200,16 @@ public abstract class GameManager {
 
     public static void resetPlayer(ServerPlayerEntity player) {
         // Reset player's inventories, xp, health, hunger, saturation and effects
-        // Clear cursor item (hovering)
-        player.getStackReference(499).set(ItemStack.EMPTY);
         player.getInventory().clear();
-        // TODO: Clear crafting grid
+        player.currentScreenHandler.setCursorStack(ItemStack.EMPTY);
+        player.currentScreenHandler.sendContentUpdates();
+        player.playerScreenHandler.getCraftingInput().clear();
+        player.playerScreenHandler.onContentChanged(player.getInventory());
         player.getEnderChestInventory().clear();
+
         player.setExperienceLevel(0);
         player.setExperiencePoints(0);
-        player.setHealth(20);
+        player.setHealth(player.getMaxHealth());
         HungerManager hungerManager = player.getHungerManager();
         hungerManager.setFoodLevel(20);
         hungerManager.setSaturationLevel(5.0F);
@@ -213,10 +217,21 @@ public abstract class GameManager {
     }
 
     public static void playSoundToPlayer(ServerPlayerEntity player, SoundEvent soundEvent) {
-        player.getEntityWorld().playSound(null, player.getBlockPos(), soundEvent, SoundCategory.MASTER);
+        playSoundToPlayer(player, soundEvent, 1.0F);
     }
 
     public static void playSoundToPlayer(ServerPlayerEntity player, SoundEvent soundEvent, float volume) {
-        player.getEntityWorld().playSound(null, player.getBlockPos(), soundEvent, SoundCategory.MASTER, volume, 1.0F);
+        player.networkHandler.sendPacket(
+                new PlaySoundS2CPacket(
+                        RegistryEntry.of(soundEvent),
+                        SoundCategory.MASTER,
+                        player.getX(),
+                        player.getY(),
+                        player.getZ(),
+                        volume,
+                        1.0F,
+                        player.getEntityWorld().random.nextLong()
+                )
+        );
     }
 }
