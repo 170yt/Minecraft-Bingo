@@ -120,7 +120,7 @@ public class BingoTeam {
                 Goal goal = goals.get(i);
                 ScoreAccess score = scoreboard.getOrCreateScore(ScoreHolder.fromName(goal.getName()), objective);
                 score.setScore(15 - i);
-                score.setDisplayText(goal.getDisplayText());
+                score.setDisplayText(Text.empty().append(goal.getIcon()).append(" " + goal.getName()));
             }
             scoreboard.getOrCreateScore(ScoreHolder.fromName("§7+§r" + (goals.size() - 14) + " more"), objective).setScore(1);
         } else {
@@ -128,7 +128,7 @@ public class BingoTeam {
                 Goal goal = goals.get(i);
                 ScoreAccess score = scoreboard.getOrCreateScore(ScoreHolder.fromName(goal.getName()), objective);
                 score.setScore(goals.size() - i);
-                score.setDisplayText(goal.getDisplayText());
+                score.setDisplayText(Text.empty().append(goal.getIcon()).append(" " + goal.getName()));
             }
         }
     }

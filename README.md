@@ -57,19 +57,14 @@ All available settings from top left to bottom right:
 - `Goal Type: Items` - Enable items as goals
 - `Goal Type: Mobs` - Enable mobs as goals
 - `Goal Type: Advancements` - Enable advancements as goals
-- `Overworld Easy Pool` - Include easy goals from the overworld (see [Pools](#Overworld-Easy))
-- `Overworld Medium Pool` - Include medium goals from the overworld (see [Pools](#Overworld-Medium))
-- `Overworld Hard Pool` - Include hard goals from the overworld (see [Pools](#Overworld-Hard))
-- `Nether Pool` - Include goals from the nether (see [Pools](#Nether))
-- `End Pool` - Include goals from the end (see [Pools](#End))
-- `Extreme Pool` - Include the hardest goals from all dimensions (see [Pools](#Extreme))
+- Enable/Disable up to 18 Pools (see [Pools](#Pools))
 - `Stop Game` - Stops the current game and shows the leaderboard
 - `Pause/Resume Game` - Pauses or resumes the current game
 - `Start Game` - Starts a new game with the current settings
 
 ## Icons
 ![Scoreboard with Icons](images/Bingo-Scoreboard.png)<br>
-The scoreboard can display icons for each goal. For this to work, the player (client) needs to have the [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack) installed.<br>
+The scoreboard displays icons for each goal. For this to work, the player (client) needs to have the [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack) installed.<br>
 For instructions on how to install the resource pack, see [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack).
 
 ## Images
@@ -102,6 +97,11 @@ The team backpack can be accessed by every team member using the `/backpack` com
 
 ## Pools
 Pools are used to group goals into different categories. Each pool contains a set of items, mobs and advancements that can be selected as goals.
+Each pool has a config file that can be modified to add or remove goals.
+You can also create your own custom pools by creating a new config file in the `config/bingo/pools` folder.
+There you will also find the existing pool config files that you can modify.
+
+Bingo comes with the following pools by default:
 
 ### Overworld Easy
 Requires little to no traveling and can be completed in a short amount of time.<br>
@@ -134,8 +134,6 @@ Includes: dyed Shulker Boxes, aged Copper Variants, Trial Chambers, Beacons
   ![Bingo Goals Inventory without Resource Pack](images/Bingo-Goals-Missing-Textures.png)<br>
   ![Scoreboard without Resource Pack](images/Bingo-Scoreboard-Missing-Textures.png)<br>
   You need to install the [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack).
-- **I cannot see the icons in the scoreboard. What can I do?**<br>
-  Make sure that the item-icon mappings file is present (for instructions see [Minecraft Bingo Resource Pack](https://github.com/170yt/Minecraft-Bingo-Resource-Pack)).
 - **Do I need to install the mod on the client side?**<br>
   No, the mod is server-side only and does not require the client to have it installed if it's already installed on the server.<br>
   The mod is designed to be played on a server with vanilla clients and does not require any client-side mods.

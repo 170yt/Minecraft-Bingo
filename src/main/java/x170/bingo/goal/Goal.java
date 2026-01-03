@@ -10,7 +10,6 @@ import net.minecraft.text.TextColor;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
-import x170.bingo.icon.IconManager;
 
 public interface Goal {
     static ItemStack generateDisplayItem(Item item, @Nullable Text name, @Nullable Text description) {
@@ -25,7 +24,7 @@ public interface Goal {
             displayItem.set(DataComponentTypes.CUSTOM_NAME, name.copy().styled(style -> style.withItalic(style.isItalic()).withColor(style.getColor() != null ? style.getColor() : TextColor.fromFormatting(Formatting.WHITE))));
         if (description != null)
             displayItem.apply(DataComponentTypes.LORE, LoreComponent.DEFAULT, description.copy().styled(style -> style.withItalic(false).withColor(TextColor.fromFormatting(Formatting.GRAY))), LoreComponent::with);
-        if (IconManager.isUsingIcons() && model != null)
+        if (model != null)
             displayItem.set(DataComponentTypes.ITEM_MODEL, model);
 //        displayItem.set(DataComponentTypes.CUSTOM_MODEL_DATA, new CustomModelDataComponent(floats, flags, strings, colors));
 
@@ -45,7 +44,7 @@ public interface Goal {
 
     ItemStack getDisplayItem();
 
-    Text getDisplayText();
+    Text getIcon();
 
     @Override
     boolean equals(Object obj);

@@ -19,7 +19,6 @@ import x170.bingo.command.BingoCommand;
 import x170.bingo.command.TopCommand;
 import x170.bingo.event.*;
 import x170.bingo.game.GameManager;
-import x170.bingo.icon.IconManager;
 import x170.bingo.pool.PoolManager;
 import x170.bingo.setting.SettingsManager;
 import x170.bingo.team.TeamManager;
@@ -56,7 +55,6 @@ public class Bingo implements ModInitializer {
 
     private void onServerStarted(MinecraftServer server) {
         SERVER = server;
-        IconManager.init();
         PoolManager.init();
         SettingsManager.loadSettings();
         TeamManager.createTeams();

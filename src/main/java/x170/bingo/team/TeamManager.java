@@ -52,7 +52,7 @@ public abstract class TeamManager {
             Bingo.LOGGER.info("Team {} (Player {}) got {}", team.getName(), player.getName().getString(), goal.getName());
 
             team.sendMessage(
-                    Text.literal("§a+ §r").append(goal.getDisplayText()),
+                    Text.literal("§a+ §r").append(goal.getIcon()).append(" §a" + goal.getName()),
                     true
             );
 

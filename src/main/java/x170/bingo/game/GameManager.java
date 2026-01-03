@@ -4,6 +4,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.advancement.AdvancementEntry;
 import net.minecraft.advancement.AdvancementProgress;
 import net.minecraft.entity.player.HungerManager;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -14,7 +15,10 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.*;
+import net.minecraft.text.object.AtlasTextObjectContents;
+import net.minecraft.util.Atlases;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.TeleportTarget;
@@ -233,5 +237,18 @@ public abstract class GameManager {
                         player.getEntityWorld().random.nextLong()
                 )
         );
+    }
+
+    public static MutableText getItemIcon(Item item) {
+        return getIcon(item, false);
+    }
+
+    public static MutableText getAdvancementIcon(Item item) {
+        return getIcon(item, true);
+    }
+
+    private static MutableText getIcon(Item item, boolean asAdvancement) {
+        Identifier identifier = Identifier.of(item.toString().replace(":", asAdvancement ? ":advancement_item/" : ":item/"));
+        return Text.object(new AtlasTextObjectContents(Atlases.ITEMS, identifier));
     }
 }

@@ -7,7 +7,7 @@ import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import x170.bingo.icon.IconManager;
+import x170.bingo.game.GameManager;
 
 public class EntityGoal implements Goal {
     public static final String DISPLAY_NAME = "Mobs";
@@ -15,7 +15,7 @@ public class EntityGoal implements Goal {
     public static final Item DISPLAY_ITEM = Items.CREEPER_SPAWN_EGG;
     private final String name;
     private final ItemStack displayItem;
-    private final Text displayText;
+    private final Text icon;
     private final EntityType<?> entityType;
 
     public EntityGoal(EntityType<?> entityType) {
@@ -28,7 +28,7 @@ public class EntityGoal implements Goal {
                 name,
                 Text.literal("Kill " + this.name)
         );
-        this.displayText = IconManager.getItemIcon(displayItem).append(Text.literal(this.name));
+        this.icon = GameManager.getItemIcon(displayItem);
         this.entityType = entityType;
     }
 
@@ -52,8 +52,8 @@ public class EntityGoal implements Goal {
         return entityType;
     }
 
-    public Text getDisplayText() {
-        return displayText;
+    public Text getIcon() {
+        return icon;
     }
 
     @Override
